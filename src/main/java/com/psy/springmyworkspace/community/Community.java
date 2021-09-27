@@ -1,5 +1,6 @@
 package com.psy.springmyworkspace.community;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,5 +19,7 @@ public class Community {
 	private String content;
 	private String time;
 	private Long createdTime;
+	private String img;
+	private String writer;
 
 }

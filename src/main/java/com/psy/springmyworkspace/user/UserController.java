@@ -1,7 +1,7 @@
 package com.psy.springmyworkspace.user;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,9 +26,13 @@ public class UserController {
 		return repo.findAll();
 	}
 	
-	@PostMapping(value ="/users")
-	public User addUser(@RequestBody User user, HttpServletResponse res) {
-		if(user.getId() == null || user.getId().equals("")) {
+	@PostMapping(value ="/users/register")
+	public User signUpUser(@RequestBody User user, HttpServletResponse res) {
+		if(user.getNickname() == null || user.getNickname().equals("")) {
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+		if(user.getUserId() == null || user.getUserId().equals("")) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
@@ -36,6 +40,12 @@ public class UserController {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
-		user.setCreatedTime(new Date().getTime() );
 		return repo.save(user);
-	}}
+	}		
+	@PostMapping(value="/users/login")
+	public Optional<User> loginUser(@RequestBody User user, HttpServletResponse res) {
+		
+		return repo.findByUserId(user.getUserId());
+	}
+}
+	
